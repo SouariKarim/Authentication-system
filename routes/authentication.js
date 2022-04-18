@@ -60,7 +60,19 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.post('/validationEmail/:name', auth, async (req, res, next) => {
+// get the validation page router
+router.get('/validationPage', auth, async (req, res) => {
+  let users;
+  try {
+    users = await Inscription.findAll();
+    return res.json(users);
+  } catch (ex) {
+    throw ex;
+  }
+});
+
+// validation email router
+router.post('/validationEmail/:name', async (req, res, next) => {
   const name = req.params.name;
 
   // the admin id
@@ -90,6 +102,7 @@ router.post('/validationEmail/:name', auth, async (req, res, next) => {
   }
 });
 
+// generate token router
 router.post('/generateToken/:name', auth, async (req, res) => {
   const name = req.params.name;
 

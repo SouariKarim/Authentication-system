@@ -1,10 +1,13 @@
 const express = require('express');
 require('dotenv').config();
+const cors = require('cors');
 
 const { sequelize, Inscription, User } = require('./models');
 const authentication = require('./routes/authentication');
 
 const app = express();
+
+app.use(cors());
 
 const date = new Date();
 
