@@ -132,13 +132,17 @@ router.post('/generateToken/:name', auth, async (req, res) => {
       console.log('the diff is ', diffMins);
 
       if (diffMins <= 1) {
+        // get the current token
+
+        console.log(users.bearer_token);
+
         // email params
         const subject = 'This is a generate token email ';
-        const emailBody = `Hello , a generated token was sent for you . this is you generated token sent before the expiration date ===================> ${token} `;
+        const emailBody = `Hello , a generated token was sent for you . this is you generated token sent before the expiration date ===================> ${users.bearer_token} `;
         console.log('the token is resent and the time is less');
 
         await sendEmail(users.email, subject, emailBody);
-        await users.update({ bearer_token: token });
+        await users.update({ bearer_token: users.bearer_token });
         await users.update({ validation_date: sequelize.fn('NOW') });
         res.send({
           msg: 'the token was sent and the expiration date is still valid    , sent before the expiration date !!',

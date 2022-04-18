@@ -4,15 +4,15 @@ const sendEmail = async (email, subject, emailBody) => {
   var transporter = nodemailer.createTransport({
     service: 'outlook',
     auth: {
-      user: `teckguy101@outlook.com`,
-      pass: `teckguyaA`,
-      // user: `${process.env.SENDER_EMAIL}`,
-      // pass: `${process.env.EMAIL_PASSWORD}`,
+      // user: `teckguy101@outlook.com`,
+      // pass: `teckguyaA`,
+      user: `${process.env.SENDER_EMAIL}`,
+      pass: `${process.env.EMAIL_PASSWORD}`,
     },
   });
 
   var mailOptions = {
-    from: `teckguy101@outlook.com`,
+    from: `${process.env.SENDER_EMAIL}`,
     to: email,
     subject: subject,
     text: emailBody,
