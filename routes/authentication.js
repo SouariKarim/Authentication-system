@@ -61,7 +61,7 @@ router.post('/login', async (req, res) => {
 });
 
 // get the validation page router
-router.get('/validationPage', auth, async (req, res) => {
+router.get('/validationPage', async (req, res) => {
   let users;
   try {
     users = await Inscription.findAll();
@@ -103,10 +103,8 @@ router.post('/validationEmail/:name', async (req, res, next) => {
 });
 
 // generate token router
-router.post('/generateToken/:name', auth, async (req, res) => {
+router.post('/generateToken/:name', async (req, res) => {
   const name = req.params.name;
-
-  console.log(req.user.id);
 
   try {
     users = await Inscription.findAll({ where: { name: name } });
@@ -118,7 +116,7 @@ router.post('/generateToken/:name', auth, async (req, res) => {
       });
     }
 
-    const token = jwt.sign({ id: req.user.id }, 'jwtSecret', { expiresIn: 60 });
+    const token = jwt.sign({ name: name }, 'jwtSecret', { expiresIn: 60 });
 
     let diffMins;
 
